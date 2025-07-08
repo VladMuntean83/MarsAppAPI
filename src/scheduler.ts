@@ -22,6 +22,4 @@ const fetchPhotos = async () => {
 };
 
 // Run a request and write to file every 30 minutes
-cron.schedule('*/30 * * * *', () => {
-    fetchPhotos();
-});
+cron.schedule('*/30 * * * *', () => fetchPhotos);
