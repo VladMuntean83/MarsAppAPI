@@ -5,12 +5,15 @@ import cron from 'node-cron';
 const fetchPhotos = async () => {
     try {
         const resp = await axios.get('http://localhost:8000/rovers/curiosity/photos/fhaz');
-        const myData = resp.data;
+        const myData: Object = resp.data;
         const now = new Date();
 
-        const timestamp = `Timestamp: ${now.toISOString()}\n`;
+        const jsonToSend = {
+            timestamp: now.toISOString(),
+            photos: myData["photos"]
+        };
 
-        fs.writeFileSync('photoLogs.txt',timestamp + JSON.stringify(myData, null, 2));
+        fs.writeFileSync('photoLogs.json', JSON.stringify(jsonToSend, null, 2));
 
         console.log("Wrote to file!");
     } catch (err) {
@@ -19,6 +22,6 @@ const fetchPhotos = async () => {
 };
 
 // Run a request and write to file every 30 minutes
-cron.schedule('*/30 * * * *', () => {
+cron.schedule('*/1 * * * *', () => {
     fetchPhotos();
 });
