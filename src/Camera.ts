@@ -4,8 +4,10 @@ export class Camera {
     fullName: string;
 
     constructor(response: Object) {
-        this.id = response["id"];
-        this.name = response["name"];
-        this.fullName = response["full_name"];
+        if (response) {
+            this.id = response["id"];
+            this.name = response["name"];
+            this.fullName = response["full_name"];
+        }
     }
 }

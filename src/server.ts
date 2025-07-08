@@ -4,15 +4,10 @@ require("dotenv").config();
 import { Rover } from "./Rover";
 import {Photo} from "./Photo";
 
-const roverBody = 'https://api.nasa.gov/mars-photos/api/v1/rovers?api_key=';
 
 const roverName = 'curiosity';
 const camera = 'fhaz';
 const sol = '1000';
-
-console.log(process.env.NASA_KEY);
-
-const roverCameraBody = `https://api.nasa.gov/mars-photos/api/v1/rovers/${roverName}/photos`;
 const roverCameraParams = `?sol=${sol}&camera=${camera}&api_key=${process.env.NASA_KEY}`;
 
 const app = express();
@@ -28,8 +23,9 @@ router.get('/test', (req: any, res: any) => res.send('Hello Vlad !'));
 router.get('/rovers', async (req: any, res: any) =>
     {
         try {
-            const resp = await axios.get(roverBody + process.env.NASA_KEY);
-            // res.json(resp.data);
+            const resp = await axios.get(
+                `https://api.nasa.gov/mars-photos/api/v1/rovers?api_key=${process.env.NASA_KEY}`
+            );
 
             const roverList: Rover[] = [];
             for (const roverResponse of resp.data["rovers"])
@@ -47,7 +43,9 @@ router.get('/rovers', async (req: any, res: any) =>
 router.get(`/rovers/${roverName}/photos/${camera}`, async (req: any, res: any) =>
     {
         try {
-            const resp = await axios.get(roverCameraBody + roverCameraParams);
+            const resp = await axios.get(
+                `https://api.nasa.gov/mars-photos/api/v1/rovers/${roverName}/photos` + roverCameraParams
+            );
             // res.json(resp.data);
 
             const photoList: Photo[] = [];
