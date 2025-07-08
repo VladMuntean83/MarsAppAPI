@@ -6,9 +6,10 @@ const roverBody = 'https://api.nasa.gov/mars-photos/api/v1/rovers?api_key=';
 
 const roverName = 'curiosity';
 const camera = 'fhaz';
+const sol = '1000';
 
 const roverCameraBody = `https://api.nasa.gov/mars-photos/api/v1/rovers/${roverName}/photos`;
-const roverCameraParams = `?sol=1000&camera=${camera}&api_key=${NASA_KEY}`;
+const roverCameraParams = `?sol=${sol}&camera=${camera}&api_key=${NASA_KEY}`;
 
 const app = express();
 const port = 8000;
